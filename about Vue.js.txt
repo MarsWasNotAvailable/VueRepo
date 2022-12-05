@@ -1,0 +1,20 @@
+https://vuejs.org/
+it's a Javascript framework (written in superset Typescript),
+intended for front-end,
+it's open source,
+it uses a model-view-viewmodel (MVVM, aka ModelViewBinder) architecture (GUI in the front-end is separated from back-end)
+it extends HTML, and define common-use components
+uses HTML-based template
+
+pros:
+claims to be lightweight, versatile (tries to apply to many things), reactive
+
+cons:
+looks like a lot of work for a simple thing
+
+"technologie adjacente"? what is used aside it?
+HTML, nodejs (npm)
+
+alternatives:
+https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel#Implementations
+in javascript, there's Angular, among others, that we already "used"
