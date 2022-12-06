@@ -14,41 +14,66 @@
 
 <body>
 
-  <div id="app" class="flex">
-	<h1 class="flex">{{ HeaderOne }}</h1>
-    <span>Newsletter</span>
-    <subscription-form intent="Register" ></subscription-form>
-  </div>
+	<button id="RegisterButton" type="button" onClick="CreateDemo('Register')">Register Demo</button>
+	<button id="UnregisterButton" type="button" onClick="CreateDemo('Unregister')">Unregister Demo</button> 
+
+  <!-- <div id="app" class="flex"> -->
+	<!-- <h1 class="flex">{{ HeaderOne }}</h1> -->
+    <!-- <span>Newsletter</span> -->
+    <!-- <subscription-form intent="Register" ></subscription-form> -->
+  <!-- </div> -->
 
   <script>
-	<!-- var Widget = document.createElement("div"); -->
-	<!-- Widget.id = "app"; -->
-	<!-- Widget.className = "flex"; -->
+	function CreateDemo(Type)
+	{
+		var Old = document.getElementById("app");
+		if (Old) Old.parentNode.removeChild(Old);
 	
-	<!-- var WidgetHeader = document.createElement("h1"); -->
-	<!-- WidgetHeader.className = "flex"; -->
-	<!-- WidgetHeader.innerHTML = "{{ HeaderOne }}"; -->
-	<!-- Widget.appendChild(WidgetHeader); -->
+		var Widget = document.createElement("div");
+		Widget.id = "app";
+		Widget.className = "flex";
+		
+		var WidgetHeader = document.createElement("h1");
+		WidgetHeader.className = "flex";
+		WidgetHeader.innerHTML = "{{ HeaderOne }}";
+		Widget.appendChild(WidgetHeader);
+		
+		var SubscribeForm = document.createElement("div");
+		SubscribeForm.innerHTML = '<subscription-form intent="' + Type + '"></subscription-form>';
+
+		Widget.appendChild(SubscribeForm.firstChild);
+		
+		document.body.appendChild(Widget);
+		
+		var SubscriptionWidget = new Vue({
+		  el: '#app',
+		  data: {
+			HeaderOne: 'Demo: Vue on front-end, PHP+MySQL on back-end'
+			},
+		  components: {
+			'subscription-form': window.httpVueLoader('SubscribeForm.vue')
+		  },
+		});
+		
+		console.log(SubscriptionWidget);
+	}
+  
+
 	
-	<!-- var SubscribeForm = document.createElement("subscription-form", "intent"); -->
-	<!-- Widget.appendChild(SubscribeForm); -->
 	
-	<!-- document.body.appendChild(Widget); -->
-	
-	
-    var SubscriptionWidget = new Vue({
-      el: '#app',
-      data: {
-		HeaderOne: 'Demo: Vue on front-end, PHP+MySQL on back-end'
-		},
-      components: {
-        'subscription-form': window.httpVueLoader('SubscribeForm.vue')
-      },
-    });
+    <!-- var SubscriptionWidget = new Vue({ -->
+      <!-- el: '#app', -->
+      <!-- data: { -->
+		<!-- HeaderOne: 'Demo: Vue on front-end, PHP+MySQL on back-end' -->
+		<!-- }, -->
+      <!-- components: { -->
+        <!-- 'subscription-form': window.httpVueLoader('SubscribeForm.vue') -->
+      <!-- }, -->
+    <!-- }); -->
 	
 	//SubscriptionWidget.subscription-form.FormIntentValue = "Unregister";
 	
-	console.log(SubscriptionWidget);
+
 	
 
 	
