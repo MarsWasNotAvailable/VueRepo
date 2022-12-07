@@ -12,18 +12,48 @@
 	<title>Newsletter Subscription</title>
 </head>
 
-<body>
+<body onload=DisplayMessage()>
 
 	<button id="RegisterButton" type="button" onClick="CreateDemo('Register')">Register Demo</button>
-	<button id="UnregisterButton" type="button" onClick="CreateDemo('Unregister')">Unregister Demo</button> 
-
-  <!-- <div id="app" class="flex"> -->
-	<!-- <h1 class="flex">{{ HeaderOne }}</h1> -->
-    <!-- <span>Newsletter</span> -->
-    <!-- <subscription-form intent="Register" ></subscription-form> -->
-  <!-- </div> -->
+	<button id="UnregisterButton" type="button" onClick="CreateDemo('Unregister')">Unregister Demo</button>
+	<br/>
 
   <script>
+	//Display visual hints on what happens
+	window.addEventListener("load", (event) => {
+
+		var Query = new URLSearchParams(window.location.search);
+		var SubscribeState = Query.get("subscribed");
+		
+		console.log(SubscribeState);
+		
+		var MessageBox = document.createElement("span");
+		MessageBox.className = "flex";
+		
+		if (SubscribeState != null)
+		{
+			if (SubscribeState == "Already")
+			{
+				MessageBox.innerHTML = "This mail address is already subscribed to the newsletter";
+			}
+			else if (SubscribeState === "True")
+			{
+				MessageBox.innerHTML = "Successfully subscribed to the newsletter";
+			}
+			else if (SubscribeState === "False")
+			{
+				MessageBox.innerHTML = "Successfully removed from list of recipient of the newsletter";
+			}
+		}
+		else
+		{
+			MessageBox.innerHTML = "You can try to register/unregister by pressing the buttons.";
+		}
+		
+		document.body.appendChild(MessageBox);
+	});
+	
+	//Runs when the buttons are clicked to display each functionality
 	function CreateDemo(Type)
 	{
 		var Old = document.getElementById("app");
@@ -57,26 +87,6 @@
 		
 		console.log(SubscriptionWidget);
 	}
-  
-
-	
-	
-    <!-- var SubscriptionWidget = new Vue({ -->
-      <!-- el: '#app', -->
-      <!-- data: { -->
-		<!-- HeaderOne: 'Demo: Vue on front-end, PHP+MySQL on back-end' -->
-		<!-- }, -->
-      <!-- components: { -->
-        <!-- 'subscription-form': window.httpVueLoader('SubscribeForm.vue') -->
-      <!-- }, -->
-    <!-- }); -->
-	
-	//SubscriptionWidget.subscription-form.FormIntentValue = "Unregister";
-	
-
-	
-
-	
   </script>
 </body>
 </html>
