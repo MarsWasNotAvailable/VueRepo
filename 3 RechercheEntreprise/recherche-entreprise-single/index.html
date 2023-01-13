@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="./style.css">
+    <title>Demo</title>
+<body>
+	<div id="form_container" class="flex">
+		<form id="SearchForm" action="https://recherche-entreprises.api.gouv.fr/search" >
+			<input value="station"	name="q" placeholder="Termes de recherche" type="text" />
+			<input value="97470"	name="code_postal" placeholder="Entrer un code postale" type="text" pattern="\d*" />
+			
+			<div class="bouton">
+				<button
+					onclick="OnSearch()"
+					class="mdl-button mdl-js-button mdl-button--raised"
+				>
+				Recherche
+				</button>
+				
+				<button id="BtnCSV"
+					type="button"
+					onclick="OnCSV()"
+					class="mdl-button mdl-js-button mdl-button--raised"
+				>
+				To CSV
+				</button>
+			</div>
+		</form>
+	</div>
+
+<script>
+<!-- 	var form = document.getElementById("SearchForm"); -->
+<!-- function handleForm(event) { event.preventDefault(); }  -->
+<!-- form.addEventListener('submit', handleForm); -->
+function convertToCSV(objArray) {
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+            if (line != '') line += ','
+
+            line += array[i][index];
+        }
+
+        str += line + '\r\n';
+    }
+
+    return str;
+}
+
+	function OnSearch(){
+		document.getElementById("SearchForm").submit();
+		return true;
+	}
+	
+	function OnCSV(){
+		
+		const formData = new FormData(document.getElementById("SearchForm"));
+		console.log(formData);
+		
+		let URLParameters = new URLSearchParams(formData);
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", ('https://recherche-entreprises.api.gouv.fr/search?' + URLParameters.toString()));
+		
+		xhr.responseType = 'json';
+		
+		xhr.send();
+
+
+
+		<!-- xhr.onload = () => console.log(convertToCSV(xhr.response.results)); -->
+		xhr.onload = () => console.log(Object.values(xhr.response.results));
+		
+	}
+</script>
+
+</body>
+</html>
